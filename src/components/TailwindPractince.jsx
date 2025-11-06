@@ -4,7 +4,7 @@ function Tailwind() {
 
       <div className="flex gap-1 justify-center items-center p-5">
         <div className="w-[200px] h-[200px] bg-amber-200 border-8 border-black rounded-2xl pb-10" >
-          <p className="text-5xl text-[50px] font-bold font-[400] cursor-pointer"> 111</p>
+          <p className="text-5xl text-[50px] font-bold  cursor-pointer"> 111</p>
         </div>
       </div>
 
