@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: linear-gradient(to bottom right, #f9fafb, #ffffff, #f3f4f6);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  margin: 0;
+  min-height: 100vh;
+}
+
+@layer utilities {
+  .glass-effect {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .apple-shadow {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
+                0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  }
+
+  .apple-shadow-hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08),
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+}
+
+/* Apple 스타일 모달 커스터마이징 */
+.apple-modal .ant-modal-content {
+  border-radius: 24px !important;
+  padding: 24px !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.apple-modal .ant-modal-close {
+  top: 16px !important;
+  right: 16px !important;
+}
+
+.apple-modal .ant-modal-close-x {
+  width: auto !important;
+  height: auto !important;
+  line-height: 1 !important;
+}
+
+/* Shimmer 애니메이션 - Apple 스타일 */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
