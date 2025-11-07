@@ -67,7 +67,7 @@ function Users() {
           ) : null}
 
           {/* Products Grid - 로딩 중이면 스켈레톤 */}
-          <h2 className="text-[20px] md:text-[25px] lg:text-[30px] mb-4 text-center">사랑해 유진아</h2>
+          <h2 className="text-[20px] md:text-[25px] lg:text-[30px] mb-4 text-center">제품 리스트</h2>
 
           {isLoadingUsers ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
