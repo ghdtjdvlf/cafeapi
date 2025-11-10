@@ -8,7 +8,6 @@ import axios from "axios";
 
 // 2. API 함수들 정의
 export const fetchProducts = async () => {
-  await new Promise(resolve => setTimeout(resolve, 1500)); // 테스트용 지연
   const response = await axios.get(
     "https://getproducts-l5dreh5uiq-uc.a.run.app"
   );
@@ -16,8 +15,6 @@ export const fetchProducts = async () => {
 };
 
 export const fetchSalesReport = async () => {
-  await new Promise(resolve => setTimeout(resolve, 1500)); // 테스트용 지연
-
   // 📅 설정 (여기만 수정하세요!)
   const start_date = "2025-11-01";
   const end_date = "2025-11-06";

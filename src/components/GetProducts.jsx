@@ -61,7 +61,7 @@ function Users() {
             </div>
           ) : salesReportData ? (
             <div className="mb-8 p-4 bg-white rounded shadow">
-              <h2 className="text-2xl font-bold mb-4">Sales Report</h2>
+              <h2 className="text-2xl font-bold mb-4">총 매출</h2>
               <pre className="text-sm">{JSON.stringify(salesReportData, null, 2)}</pre>
             </div>
           ) : null}
@@ -91,8 +91,9 @@ function Users() {
                     className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow cursor-pointer"
                     onClick={() => showModal(product)}
                   >
-                    <h3 className="text-xl font-semibold mb-2">{product.product_name}</h3>
-                    <img src={product.detail_image} alt="" />
+                    <h3 className="text-xl font-semibold my-5 ">{product.product_name}</h3>
+                    <img src={product.detail_image} className="h-60 w-full object-cover border-8" alt="" />
+                    <p className="text-[20px] py-5 mb-0!">상품 설명 : {product.summary_description}</p>
                     <p className="text-gray-600">Product No: {product.product_no}</p>
                     <p className="text-gray-600">Price: {product.price || 'N/A'}</p>
                   </div>
