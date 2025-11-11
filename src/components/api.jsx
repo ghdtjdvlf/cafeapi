@@ -35,5 +35,13 @@ export const fetchSalesReport = async () => {
   return response.data;
 }
 
+export const fetchReview = async () => {
+    const response = await axios.get(
+      "https://getreview-l5dreh5uiq-uc.a.run.app"
+    )
+
+    return response.data
+}
+
 // [미래] 새로운 API가 추가되면 여기에 함수를 추가합니다.
 // export const fetchOrders = async () => { ... }

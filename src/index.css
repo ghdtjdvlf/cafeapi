@@ -59,3 +59,50 @@ body {
     transform: translateX(100%);
   }
 }
+
+/* 리뷰 팝업 애니메이션 */
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(100px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.8);
+  }
+}
+
+@keyframes bubbleExpand {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+.animate-fade-out {
+  animation: fadeOut 0.4s ease-in forwards;
+}
+
+.animate-bubble-expand {
+  animation: bubbleExpand 0.4s ease-out forwards;
+}
+
