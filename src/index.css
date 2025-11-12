@@ -94,6 +94,53 @@ body {
   }
 }
 
+/* 말풍선이 왼쪽에서 점점 커지는 애니메이션 */
+@keyframes bubbleSlideExpand {
+  0% {
+    opacity: 1;
+    transform: scale(0.1);
+    transform-origin: left center;
+  }
+  50% {
+    transform: scale(0.7);
+  }
+  70% {
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 콘텐츠가 서서히 나타나는 애니메이션 */
+@keyframes contentReveal {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* 프로필 이미지 등장 애니메이션 */
+@keyframes profilePop {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .animate-slide-up {
   animation: slideUp 0.3s ease-out forwards;
 }
@@ -104,5 +151,18 @@ body {
 
 .animate-bubble-expand {
   animation: bubbleExpand 0.4s ease-out forwards;
+}
+
+.animate-bubble-slide-expand {
+  animation: bubbleSlideExpand 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-profile-pop {
+  animation: profilePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-content-reveal {
+  animation: contentReveal 0.6s ease-out forwards;
+  opacity: 0;
 }
 

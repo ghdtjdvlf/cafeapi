@@ -22,12 +22,40 @@ const StarRating = ({ rating }) => {
   );
 };
 
+// 제품 정보를 가져오는 hook
+const useProduct = () => {
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch('https://getproducts-l5dreh5uiq-uc.a.run.app')
+      .then(res => res.json())
+      .then(data => {
+        setData(data);
+        setIsLoading(false);
+      })
+      .catch(err => {
+        setError(err);
+        setIsLoading(false);
+      });
+  }, []);
+
+  return { data, isLoading, error };
+};
+
 function GetReview({ onReviewClick }) {
   const {
     data: reviewData,
     isLoading: isLoadingReview,
     error: errorReview
   } = useReview();
+
+  const {
+    data: productData,
+    isLoading: isLoadingProduct,
+    error: errorProduct
+  } = useProduct();
 
   const [visibleReviews, setVisibleReviews] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(-1); // -1부터 시작 (로딩 상태)
@@ -79,13 +107,18 @@ function GetReview({ onReviewClick }) {
     }
   }, [currentIndex, reviewData]);
 
-  // 이미지 추출 헬퍼 함수
+  // 이미지 추출 헬퍼 함수 - 이미지가 없으면 제품 이미지 사용
   const extractFirstImage = (htmlContent) => {
-    if (!htmlContent) return null;
+    const productImage = productData?.products?.[0]?.detail_image || null;
+
+    if (!htmlContent) return productImage;
+
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = htmlContent;
     const img = tempDiv.querySelector('img');
-    return img ? img.src : null;
+
+    // 이미지가 없으면 제품 이미지 사용
+    return img?.src || productImage;
   };
 
   return (
@@ -109,9 +142,26 @@ function GetReview({ onReviewClick }) {
               {/* 로딩 애니메이션 - 채팅 스타일 */}
               {isShowingLoader && (
                 <div className="flex items-end gap-3 animate-slide-up">
-                  {/* 프로필 이미지 */}
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold flex-shrink-0">
-                    R
+                  {/* 프로필 이미지 - 다음에 표시될 리뷰의 첫 번째 이미지 */}
+                  <div className="flex-shrink-0">
+                    {(() => {
+                      const nextReview = reviewData?.articles?.[currentIndex + 1];
+                      const nextThumbnail = nextReview ? extractFirstImage(nextReview.content) : null;
+
+                      return nextThumbnail ? (
+                        <img
+                          src={nextThumbnail}
+                          alt="next review profile"
+                          className="w-10 h-10 rounded-full object-cover border-2 border-gray-200"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = 'https://via.placeholder.com/40';
+                          }}
+                        />
+                      ) : (
+                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-white font-bold"></div>
+                      );
+                    })()}
                   </div>
                   {/* 로딩 말풍선 */}
                   <div className="bg-gray-200 rounded-2xl rounded-bl-sm px-4 py-3 shadow-md">
@@ -147,12 +197,12 @@ function GetReview({ onReviewClick }) {
                 return (
                   <div
                     key={review.article_no}
-                    className={`flex items-start gap-3 ${isOldest ? 'animate-fade-out' : 'animate-bubble-expand'} ${textOpacity}`}
+                    className={`flex items-start gap-3 ${textOpacity}`}
                     style={{ transition: 'opacity 0.3s ease-out, transform 0.3s ease-out' }}
                     onClick={() => onReviewClick && onReviewClick(review)}
                   >
                     {/* 프로필 이미지 - 리뷰의 첫 번째 이미지 사용 */}
-                    <div className="flex-shrink-0">
+                    <div className={`flex-shrink-0 ${position === 0 ? 'animate-profile-pop' : ''}`}>
                       <img
                         src={thumbnail || 'https://via.placeholder.com/40'}
                         alt="review profile"
@@ -165,8 +215,8 @@ function GetReview({ onReviewClick }) {
                     </div>
 
                     {/* 말풍선 콘텐츠 */}
-                    <div className={`flex-1 ${bgColor} rounded-2xl rounded-bl-sm shadow-lg hover:shadow-xl cursor-pointer border border-gray-200 overflow-hidden`}>
-                      <div className="p-4">
+                    <div className={`flex-1 ${bgColor} rounded-2xl rounded-bl-sm shadow-lg hover:shadow-xl cursor-pointer border border-gray-200 ${isOldest ? 'animate-fade-out' : position === 0 ? 'animate-bubble-slide-expand' : ''}`} style={{ overflow: 'hidden' }}>
+                      <div className={`p-4 ${position === 0 ? 'animate-content-reveal' : ''}`}>
                         {/* 상단: 별점 + 작성자 */}
                         <div className="flex items-center justify-between mb-2">
                           <StarRating rating={review.rating} />
